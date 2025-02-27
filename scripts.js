@@ -6,20 +6,29 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
     }
 
-    cards.forEach((card) => {
+    // Scripts predefinidos para cada tarjeta
+    const predefinedScripts = [
+        `setInterval(() => { console.log("Ejecutando Script 1"); }, 1000);`,
+        `let count = 0; setInterval(() => { console.log("Contador:", count++); }, 1000);`,
+        `setTimeout(() => { alert("¡Hola! Este es el Script 3 ejecutado después de 3 segundos."); }, 3000);`
+    ];
+
+    cards.forEach((card, index) => {
         card.dataset.timeoutIds = JSON.stringify([]); // Almacena los IDs de setTimeout como un array vacío
         card.dataset.intervalIds = JSON.stringify([]); // Almacena los IDs de setInterval como un array vacío
 
         const runButton = card.querySelector('.run-btn');
         const stopButton = card.querySelector('.stop-btn');
-        const scriptInput = card.querySelector('textarea'); // Selecciona cualquier textarea dentro de la tarjeta
         const output = card.querySelector('.output');
 
         // Verificar si todos los elementos existen en la tarjeta
-        if (!runButton || !stopButton || !scriptInput || !output) {
+        if (!runButton || !stopButton || !output) {
             console.error("No se encontraron todos los elementos en la tarjeta:", card);
             return;
         }
+
+        // Obtener el script predefinido correspondiente
+        const scriptCode = predefinedScripts[index] || `console.log("No hay script definido para esta tarjeta.");`;
 
         // Función segura para ejecutar scripts
         const safeExecute = (code, card) => {
@@ -58,13 +67,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Ejecutar el script al hacer clic en "Ejecutar"
         runButton.addEventListener('click', () => {
-            const scriptCode = scriptInput.value.trim();
-            
-            if (!scriptCode) {
-                output.textContent = "Por favor, ingresa un script válido.";
-                return;
-            }
-
             output.textContent = "Ejecutando...";
             safeExecute(scriptCode, card);
         });
