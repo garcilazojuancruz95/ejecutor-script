@@ -18,7 +18,7 @@
     padding-top: 20px;
     position: fixed;
     left: 0;
-    top: 60px;
+    top: 50px;
     transition: width 0.3s ease;
 }
 
@@ -26,12 +26,12 @@ ul .nav {
     padding: 200px;
 }
 
-/* ✅ Cuando está colapsado (mostrando solo iconos) */
+/* Cuando está colapsado (mostrando solo iconos) */
 .sidebar.collapsed {
     width: 60px;
 }
 
-/* ✅ Oculta los textos al colapsar */
+/* Oculta los textos al colapsar */
 .sidebar.collapsed .sidebar-text {
     display: none;
 }
@@ -40,7 +40,7 @@ span.sidebar-text {
     padding-left: 10px;
 }
 
-/* ✅ Botón de alternar */
+/* Botón de alternar */
 .toggle-btn {
     position: absolute;
     top: 20px;
@@ -54,20 +54,20 @@ span.sidebar-text {
     transition: transform 0.3s ease;
 }
 
-/* ✅ Ajustar navegación */
+/* Ajustar navegación */
 .sidebar .nav-link {
     font-size: 22px;
     padding: 10px 15px;
     color: white;
 }
 
-/* ✅ Cambia el color al pasar el mouse */
+/* Cambia el color al pasar el mouse */
 .sidebar .nav-link:hover {
     background-color: #73b19a;
     border-radius: 5px;
 }
 
-/* ✅ Ajusta el contenido cuando el sidebar está colapsado */
+/* Ajusta el contenido cuando el sidebar está colapsado */
 .container-fluid {
     margin-left: 260px;
     transition: margin-left 0.3s ease;
