@@ -56,12 +56,18 @@ document.addEventListener("DOMContentLoaded", () => {
     // Botón para limpiar logs
     const clearLogsButton = document.getElementById("clearLogs");
     clearLogsButton.addEventListener("click", () => {
-        // Limpiar la tabla
-        const logTableBody = document.getElementById("logTableBody");
-        logTableBody.innerHTML = "";
-
-        // Limpiar localStorage
-        localStorage.removeItem("logs");
+        fetch("http://127.0.0.1:5000/clear-logs", {method: "POST"}) // limpiar logs en backend
+            .then(response => response.json())
+            .then(data => {
+                console.log(data.message); //mostrar mensaje del servidor
+                
+                // Limpiar la tabla
+                const logTableBody = document.getElementById("logTableBody");
+                logTableBody.innerHTML = "";
+            })
+            .catch(error => console.error("Error limpiando logs:", error));
+        // // Limpiar localStorage
+        // localStorage.removeItem("logs");
     });
 
 
@@ -71,7 +77,7 @@ document.addEventListener("DOMContentLoaded", () => {
         fetch("http://127.0.0.1:5000/run-script", {method: "POST"})
             .then(response => response.json())
             .then(log => {
-                addLog(log.startTime, log.endTime, log.duration);
+                addLog(log.id, log.nombre, log.estado, log.startTime, log.endTime, log.duration);
             })
             .catch(error => console.error("Error running script:", error));
     });
@@ -91,6 +97,7 @@ document.addEventListener("DOMContentLoaded", () => {
         
         const estadoCell = document.createElement("td");
         estadoCell.textContent = estado;
+        estadoCell.classList.add(estado === "Completado" ? "table-success": "table-danger")
 
         const startCell = document.createElement("td");
         startCell.textContent = startTime;
@@ -99,7 +106,7 @@ document.addEventListener("DOMContentLoaded", () => {
         endCell.textContent = endTime;
 
         const durationCell = document.createElement("td");
-        durationCell.textContent = `${duration} segundos`;
+        durationCell.textContent = duration;
 
         // Agregar celdas a la fila
         row.appendChild(idCell);

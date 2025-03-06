@@ -1,7 +1,7 @@
 import time
 from datetime import datetime
 
-def run_script():
+def run_script(logs):
     start_time = datetime.now()
     print("Iniciando script...")
 
@@ -15,7 +15,7 @@ def run_script():
 
     #Devolver los datos del log
     return{
-        "id": len(logs) + 1, #ID autoincremental(basado en la cantidad de logs)
+        "id": len(logs) + 1, #ID autoincremental
         "nombre": "contador-script",
         "estado": "Completado",
         "startTime": start_time.strftime("%H:%M:%S"),

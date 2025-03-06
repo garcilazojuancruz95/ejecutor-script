@@ -17,8 +17,8 @@ logs = []
 
 @app.post("/run-script")
 def execute_script():
-    log = run_script()#ejecuta el script y obtiene los datos del log
-    logs.append(log)#guarda el log en la lista
+    log = run_script(logs)  #ejecuta el script y obtiene los datos del log
+    logs.append(log)    #guarda el log en la lista
     return log
 
 @app.get("/get-logs")
@@ -27,7 +27,7 @@ def get_logs():
 
 @app.post("/clear-logs")
 def clear_logs():
-    logs.clear()#limpia la lista de logs
+    logs.clear()    #limpia la lista de logs
     return {"message": "Logs cleared"}
 
 if __name__== "__main__":
