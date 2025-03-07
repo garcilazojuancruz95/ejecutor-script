@@ -1,12 +1,48 @@
-/* Navbar */
-.navbar {
+header {
     position: fixed;
     top: 0;
     width: 100%;
     z-index: 1000;
     background-color: #f8f9fa;
-    padding: 2px 20px;
-    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 2px 10px rgba(0,0,0,0.1);
+}
+
+/* Navbar */
+.navbar {
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+}
+
+.navbar .container {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+}
+
+.logo-navbar {
+    height: 40px;
+    width: auto;
+    display: block;
+    position: absolute;
+    left: 40px;
+    transform: translateY(-40%);
+}
+
+.navbar h1 {
+    flex-grow: 1;
+    text-align: center;
+    margin: 0;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.title-nav {
+    text-align: end;
+}
+
+main {
+    padding-top: 44px;
 }
 
 /*Sidebar*/
@@ -15,10 +51,10 @@
     min-height: 100vh;
     background-color: #00a86b;
     color: white;
-    padding-top: 20px;
+    padding-top: 100px;
     position: fixed;
     left: 0;
-    top: 50px;
+    padding: 0;
     transition: width 0.3s ease;
 }
 
@@ -69,19 +105,20 @@ span.sidebar-text {
 
 /* Ajusta el contenido cuando el sidebar está colapsado */
 .container-fluid {
-    margin-left: 260px;
-    transition: margin-left 0.3s ease;
+    transition: margin-left 0.3s ease, width 0.3s ease;
+    width: calc(100% - 250px); /*resta le ancho del sidebar*/
+    margin-left: 250px;
 }
 
 .sidebar.collapsed + .container-fluid {
-    margin-left: 80px;
+    width: calc(100% - 60px);
+    margin-left: 60px;
 }
 
 /* Lista de Scripts en Filas */
 .script-list {
     padding: 60px;
     width: 60%;
-    margin: auto;
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -89,6 +126,8 @@ span.sidebar-text {
 
 /* Estilos de cada fila */
 .script-item {
+    width: 100%;
+    padding: 15px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -117,4 +156,10 @@ span.sidebar-text {
 
 .run-btn:hover {
     background-color: #218838;
+}
+
+@media (max-width: 768px) {
+    .navbar-brand {
+        padding-left: 5px;
+    }
 }

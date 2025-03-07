@@ -1,6 +1,8 @@
-from fastapi import FastAPI
+from fastapi import FastAPI 
+from fastapi.responses import FileResponse
 from fastapi.middleware.cors import CORSMiddleware#para habilitar CORS
-from script import run_script #Importar la función del script
+from contador import run_script #Importar la función del script
+import os
 
 app = FastAPI()
 
@@ -29,6 +31,15 @@ def get_logs():
 def clear_logs():
     logs.clear()    #limpia la lista de logs
     return {"message": "Logs cleared"}
+
+# Ruta para descargar logs en .txt
+@app.get("/download-log/{log_filename}")
+def download_log(log_filename: str):
+    filename = f"logs/{log_filename}"
+
+    if os.path.exists(filename):
+        return FileResponse(filename, media_type='text/plain', filename=log_filename)
+    return {"error": "Archivo no encontrado"}
 
 if __name__== "__main__":
     import uvicorn

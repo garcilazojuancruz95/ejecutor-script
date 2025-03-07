@@ -40,6 +40,10 @@ document.addEventListener("DOMContentLoaded", () => {
         toggleButton.innerHTML = '<i class="fa-solid fa-chevron-left"></i>';
     }
 
+    // hace que los scripts aparezcan al cargar página
+    scriptsContent.style.display = "block"
+    logsContent.style.display = "none"; //logs ocultos
+
     // Alterna visibilidad Logs
     logsLink.addEventListener("click", (event) => {
         event.preventDefault();
@@ -73,11 +77,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
     //Boton para ejecutar el script
     const firstRunButton = document.querySelector(".script-item .run-btn");
+    
     firstRunButton.addEventListener("click", () => {
         fetch("http://127.0.0.1:5000/run-script", {method: "POST"})
             .then(response => response.json())
             .then(log => {
-                addLog(log.id, log.nombre, log.estado, log.startTime, log.endTime, log.duration);
+                addLog(log.id, log.nombre, log.estado, log.startTime, log.endTime, log.duration, log.file);
+
+                setTimeout(() => {
+                    setTimeout(() => {
+                        console.log("Cargando logs después de que el script terminó...");
+                    }, 12000); // 10 segundos del script + 2 segundos de seguridad
+                });
             })
             .catch(error => console.error("Error running script:", error));
     });
@@ -108,6 +119,17 @@ document.addEventListener("DOMContentLoaded", () => {
         const durationCell = document.createElement("td");
         durationCell.textContent = duration;
 
+        const downloadCell = document.createElement("td");
+        const downloadButton = document.createElement("button");
+        downloadButton.textContent = "Descargar";
+        downloadButton.classList.add("btn", "btn-primary", "btn-sm");
+        downloadButton.onclick = (event) => {
+            event.preventDefault(); // evita la redireccion
+            window.location.href = `http://127.0.0.1:5000/download-log/${id}`;
+        }
+
+        downloadCell.appendChild(downloadButton);
+
         // Agregar celdas a la fila
         row.appendChild(idCell);
         row.appendChild(nombreCell);
@@ -115,6 +137,7 @@ document.addEventListener("DOMContentLoaded", () => {
         row.appendChild(startCell);
         row.appendChild(endCell);
         row.appendChild(durationCell);
+        row.appendChild(downloadCell);
 
         // Agregar fila a la tabla
         logTableBody.appendChild(row);
@@ -166,6 +189,7 @@ document.addEventListener("DOMContentLoaded", () => {
             .then(logs => {
                 const logTableBody = document.getElementById("logTableBody");
                 logTableBody.innerHTML = ""; //limpia la tabla
+
                 logs.forEach(log => {
                     addLog(log.id, log.nombre, log.estado, log.startTime, log.endTime, log.duration);
                 });

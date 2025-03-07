@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sidebar Expandible</title>
+    <title>Scripts - Operaciones</title>
 
     <!-- ✅ Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -18,12 +18,12 @@
 
         <header>
             <!-- Navbar -->
-            <nav class="navbar bg-body-tertiary">
-                <div class="container">
-                <a class="navbar-brand" href="#">
-                    <img src="../frontend/img/images.png" alt="Nasini" width="100" height="24">
-                </a>
-                <h1 class="text-center">Operaciones</h1>
+            <nav class="navbar">
+                <div class="container d-flex align-items-center">
+                    <a class="navbar-brand me-0" href="#">
+                        <img src="././img/logo-nasini.svg" alt="Nasini Logo" class="logo-navbar">
+                    </a>
+                    <h1 class="title-nav">Operaciones</h1>
                 </div>
             </nav>
         </header>
@@ -56,7 +56,7 @@
                             </div>
                         </div>
                         
-                        <!-- <div class="script-item">
+                        <div class="script-item">
                             <span>cauciones_mav</span>
                             <div class="buttons">
                                 <button class="run-btn"><i class="fa-solid fa-play"></i> Ejecutar</button>
@@ -138,7 +138,7 @@
                             <div class="buttons">
                                 <button class="run-btn"><i class="fa-solid fa-play"></i> Ejecutar</button>
                             </div>
-                        </div> -->
+                        </div>
                     </div>
                 </div>
         
@@ -158,6 +158,7 @@
                                     <th>Hora de Inicio</th>
                                     <th>Hora de Finalización</th>
                                     <th>Duración (segundos)</th>
+                                    <th>File</th>
                                 </tr>
                             </thead>
                             <tbody id="logTableBody"></tbody>
