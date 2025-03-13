@@ -13,7 +13,7 @@ def run_script():
     time.sleep(10)
     end_time = datetime.now()
     duration = (end_time - start_time).total_seconds()
-
+    
     log = {
         "startTime": start_time.strftime("%H:%M:%S"),
         "endTime": end_time.strftime("%H:%M:%S"),

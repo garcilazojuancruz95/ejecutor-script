@@ -1,0 +1,15 @@
+Iniciando script...
+Contador: 1
+Contador: 2
+Contador: 3
+Contador: 4
+Contador: 5
+Contador: 6
+Contador: 7
+Contador: 8
+Contador: 9
+Contador: 10
+Finalizando script...
+Hora de inicio: 11:07:51
+Hora de finalización: 11:08:01
+Duración: 10.01 segundos

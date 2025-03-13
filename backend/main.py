@@ -1,7 +1,7 @@
 from fastapi import FastAPI 
 from fastapi.responses import FileResponse
 from fastapi.middleware.cors import CORSMiddleware#para habilitar CORS
-from contador import run_script #Importar la función del script
+from scripts.contador import run_script #Importar la función del script
 import os
 
 app = FastAPI()
