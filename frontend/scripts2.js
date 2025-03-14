@@ -46,8 +46,10 @@ document.addEventListener("DOMContentLoaded", () => {
         scriptsContent.style.display = "none";
     });
 
+    const BACKEND_URL = "http://127.0.0.1:8000";
+
     function loadScripts() {
-        fetch("http://127.0.0.1:8000/get-scripts")
+        fetch(`${BACKEND_URL}/get-scripts`)
             .then(response => response.json())
             .then(scripts => {
                 scriptList.innerHTML = ""; //limpiar lista
@@ -78,17 +80,26 @@ document.addEventListener("DOMContentLoaded", () => {
 
     //ejecuta script seleccionado
     function executeScript(scriptName) {
-        fetch(`http://127.0.0.1:8000/run-script/${scriptName}`, {method: "POST"})
+        fetch(`http://127.0.0.1:8000/run-script/${scriptName}`, { method: "POST" })
             .then(response => response.json())
             .then(log => {
-                addLog(log.id, log.nombre, log.estado, log.starTime, log.endTime, log.duration, log.file);
-                setTimeout(loadLogsFromBackend, 12000); //carga logs después de 12s
+                console.log("Datos recibidos del backend:", log); // DEBUG
+                
+                if (!log.id) {
+                    console.error("Error: El log recibido no tiene datos válidos.");
+                    return;
+                }
+    
+                addLog(log.id, log.nombre, log.estado, log.startTime, log.endTime, log.duration, log.file);
+                setTimeout(loadLogsFromBackend, 8000); // Cargar logs después de 5s
             })
             .catch(error => console.error("Error ejecutando script:", error));
     }
 
     //agrega log a la tabla
     function addLog(id, nombre, estado, startTime, endTime, duration, file) {
+        console.log("Log recibido:", {id, nombre, estado, startTime, endTime, duration, file});
+
         const row = document.createElement("tr");// Crear una fila para la tabla
         row.innerHTML = `
             <td>${id}</td>
@@ -101,14 +112,21 @@ document.addEventListener("DOMContentLoaded", () => {
                 <button class="btn btn-primary btn-sm download-btn" data-file="${file}">Descargar</button>
             </td>
         `;
+
         logTableBody.appendChild(row);
 
-        //agrega evento de descarga
-        row.querySelector(".download-btn").addEventListener("click", (event) => {
-            event.preventDefault();
-            const fileName = event.target.dataset.file;
-            window.location.href = `http://127.0.0.1:8000/download-log/${fileName}`;
-        });
+        setTimeout(() => {
+            const downloadBtn = row.querySelector(".download-btn");
+            if (downloadBtn) {
+                downloadBtn.addEventListener("click", (event => {
+                    event.preventDefault();
+                    const fileName = event.target.dataset.file;
+                    console.log("Descargando archivo:", fileName);
+                    window.location.href = `http://127.0.0.1:8000/download-log/${fileName}`;
+                })
+            )
+            }
+        })
     }
 
     //carga logs desde el backend

@@ -41,7 +41,6 @@ def run_script(logs):
         log_data["endTime"] = end_time.strftime("%H:%M:%S")
         log_data["duration"] = f"{duration:.2f} segundos"
 
-
         file.write(f"Finalizando script...\n")
         file.write(f"Hora de inicio: {log_data['startTime']}\n")
         file.write(f"Hora de finalización: {log_data['endTime']}\n")

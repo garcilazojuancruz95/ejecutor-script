@@ -37,25 +37,56 @@ def list_scripts():
 
 @app.post("/run-script/{script_name}")
 def execute_script(script_name: str):
-    """Ejecuta un script en la carpeta scripts/"""
+    """Ejecuta un script en la carpeta script"""
     script_path = os.path.join(SCRIPTS_FOLDER, f"{script_name}.py")
 
     if not os.path.exists(script_path):
         return {"error": "Script no encontrado"}
     
     try:
-        #ejecutar el script en un subproceso
+        #ejecuta el script en un subproceso
         result = subprocess.run(["python", script_path], capture_output=True, text=True)
         output = result.stdout
         error_output = result.stderr
+    
+        log_data = {
+                "id": len(logs) + 1,
+                "nombre": script_name,
+                "estado": "Completado" if result.returncode == 0 else "Fallido",
+                "startTime": "00:00:00",  # Puedes cambiar esto si el script devuelve un timestamp real
+                "endTime": "00:00:10",  # Simulación de tiempo final
+                "duration": "10s",
+                "file": f"log_{script_name}.txt"  # Nombre del log generado
+            }
 
-        if result.returncode == 0:
-            return {"message": f"Script {script_name} ejecutando correctamente", "output": output}
-        else:
-            return {"message": f"Error ejecutando {script_name}", "error": error_output}
-        
+        logs.append(log_data)
+
+        return log_data
+
     except Exception as e:
         return {"error": str(e)}
+
+# @app.post("/run-script/{script_name}")
+# def execute_script(script_name: str):
+#     """Ejecuta un script en la carpeta scripts/"""
+#     script_path = os.path.join(SCRIPTS_FOLDER, f"{script_name}.py")
+
+#     if not os.path.exists(script_path):
+#         return {"error": "Script no encontrado"}
+    
+#     try:
+#         #ejecutar el script en un subproceso
+#         result = subprocess.run(["python", script_path], capture_output=True, text=True)
+#         output = result.stdout
+#         error_output = result.stderr
+
+#         if result.returncode == 0:
+#             return {"message": f"Script {script_name} ejecutando correctamente", "output": output}
+#         else:
+#             return {"message": f"Error ejecutando {script_name}", "error": error_output}
+        
+#     except Exception as e:
+#         return {"error": str(e)}
     
 
 
