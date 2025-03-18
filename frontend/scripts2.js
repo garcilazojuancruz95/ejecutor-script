@@ -8,6 +8,28 @@ document.addEventListener("DOMContentLoaded", () => {
     const scriptList = document.querySelector(".script-list");
     const logTableBody = document.getElementById("logTableBody");
     const clearLogsButton = document.getElementById("clearLogs");
+    const fileInput = document.getElementById("uploadFile");
+    const file = fileInput.files[0]
+
+    if(!file) {
+        alert("Selecciona un archivo para subir.");
+        return;
+    }
+
+    const formData = new FormData();
+    formData.append("file", file);
+
+    fetch("http://127.0.0.1:8000/upload-script/", {
+        method: "POST",
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.dog(data);
+        alert(data.message);
+        loadScripts(); //Recargar la lista de scripts
+    })
+    .catch(error => console.error("Error subiendo scripts:", error));
 
     if (!scriptList) {
         console.error("No se encontró el elemento '.script-list' en el DOM.");
